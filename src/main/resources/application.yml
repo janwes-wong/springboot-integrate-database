@@ -29,6 +29,19 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 1000
+  data:
+    mongodb:
+      # 数据库带权限验证 固定格式：mongodb://用户名:密码@host:port/database name?authSource=admin&authMechanism=SCRAM-SHA-1
+      # 数据库无权限验证 固定格式：mongodb://host:port/database name
+      #uri: mongodb://root:123456@localhost:27017/e_store?authSource=admin&authMechanism=SCRAM-SHA-1
+      uri: Ll5LXDgVgZL0aRMPBomN6bAVxyO3auUFXqbm69sXLbDyfuWZvrlssGhVeNy7FvOuAO7GFkOzxoHJIvyac9BIMQSyq0iPmr91Mc9OA/19qu4tngInhMhM2/gC63svLzyS
+      # 设置uri后，以下host等配置无需设置
+      #host: localhost
+      #port: 27017
+      #username: root
+      #password: 123456
+      #database: e_store
+      #authentication-database: admin
 mybatis-plus:
   # 设置Mapper接口所对应的XML文件位置，如果你在Mapper接口中有自定义方法，需要进行该配置
   mapper-locations: classpath*:mapper/*.xml

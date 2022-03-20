@@ -39,6 +39,7 @@ public class DataSourceConfiguration {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(username);
+        // m密文解密
         dataSource.setPassword(SecurityUtil.decrypt(password));
         dataSource.setDriverClassName(driverClassName);
         LOGGER.info("===> initialize DruidDataSource,connect to MySQL server success......");

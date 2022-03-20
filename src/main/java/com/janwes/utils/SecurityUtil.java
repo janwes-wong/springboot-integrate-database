@@ -23,6 +23,9 @@ public class SecurityUtil {
      */
     private static final String AES_ALGORITHM = "AES";
 
+    /**
+     * 随机算法种子
+     */
     private static final String SEED = "chinagdszbaoan";
 
     /**
