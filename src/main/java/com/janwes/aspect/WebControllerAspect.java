@@ -104,10 +104,7 @@ public class WebControllerAspect {
         }
         // 获取请求方法上的ApiOperation注解及注解值
         ApiOperation apiOperation = methodSignature.getMethod().getAnnotation(ApiOperation.class);
-        String apiOperationValue = "--";
-        if (Objects.nonNull(apiOperation)) {
-            apiOperationValue = StringUtils.isEmpty(apiOperation.value()) ? "--" : apiOperation.value();
-        }
+        String apiOperationValue = Objects.isNull(apiOperation) ? "--" : apiOperation.value();
         // result的值为被拦截方法的返回值
         Object result = joinPoint.proceed();
 
