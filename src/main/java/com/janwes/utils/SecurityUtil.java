@@ -13,7 +13,7 @@ import java.security.SecureRandom;
  * @author Janwes
  * @version 1.0.0
  * @package com.janwes.utils
- * @date 2022/3/19 14:44
+ * @date 2021/9/19 14:44
  * @description 对称加密算法  AES加密和解密
  */
 public class SecurityUtil {
