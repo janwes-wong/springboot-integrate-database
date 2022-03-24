@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.janwes.utils.SecurityUtil;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +17,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
@@ -27,6 +35,50 @@ import java.util.Arrays;
  */
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
+
+    /**
+     * spring-boot-starter-data-redis的redis连接器基于Lettuce
+     * Lettuce是Spring Data Redis 通过包支持的基于Netty的开源连接器
+     *
+     * @param redisProperties
+     * @return
+     */
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+        try {
+            RedisProperties.Pool pool = redisProperties.getLettuce().getPool();
+            // GenericObjectPoolConfig 连接池配置
+            GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+            genericObjectPoolConfig.setMaxTotal(pool.getMaxActive());
+            genericObjectPoolConfig.setMaxIdle(pool.getMaxIdle());
+            genericObjectPoolConfig.setMinIdle(pool.getMinIdle());
+            genericObjectPoolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
+
+            // 构建Lettuce连接池客户端配置
+            LettucePoolingClientConfiguration clientConfiguration = LettucePoolingClientConfiguration.builder()
+                    .poolConfig(genericObjectPoolConfig).build();
+
+            // 单点redis
+            RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+            // 哨兵redis
+            // RedisSentinelConfiguration redisConfig = new RedisSentinelConfiguration();
+            // 集群redis
+            // RedisClusterConfiguration redisConfig = new RedisClusterConfiguration();
+            redisConfig.setHostName(redisProperties.getHost());
+            redisConfig.setPort(redisProperties.getPort());
+            // 密文解密
+            String password = SecurityUtil.decrypt(redisProperties.getPassword());
+            redisConfig.setPassword(password);
+            redisConfig.setDatabase(redisProperties.getDatabase());
+
+            LOGGER.info("===> initialize RedisConfig,connect to redis server success......");
+            return new LettuceConnectionFactory(redisConfig, clientConfiguration);
+        } catch (Exception e) {
+            throw new RuntimeException("===> connect to redis server failure......", e);
+        }
+    }
 
     /**
      * redis缓存管理器

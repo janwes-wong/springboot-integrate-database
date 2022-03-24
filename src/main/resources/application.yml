@@ -50,8 +50,11 @@ spring:
   redis:
     host: localhost
     port: 6379
-    password: 123456
-    jedis:
+    password: NLws+QIzVElDP8iFBFW1SA==
+    # 连接超时时间（毫秒）
+    timeout: 1000
+    # 设置lettuce连接池需引入 commons-pool2依赖
+    lettuce:
       pool:
         # 连接池最大连接数（使用负值表示没有限制）
         max-active: 200
@@ -61,8 +64,6 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
-    # 连接超时时间（毫秒）
-    timeout: 1000
   data:
     mongodb:
       # 数据库带权限验证 固定格式：mongodb://用户名:密码@host:port/database name?authSource=admin&authMechanism=SCRAM-SHA-1
