@@ -1,7 +1,7 @@
 package com.janwes;
 
 import com.janwes.domain.mgdb.Article;
-import com.janwes.mgrepository.ArticleMongoRepository;
+import com.janwes.repository.mgrepository.ArticleMongoRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

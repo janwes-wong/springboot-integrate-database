@@ -64,6 +64,16 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
+  # ElasticSearch配置
+  elasticsearch:
+    rest:
+      # elasticsearch服务端地址，可配置多个节点
+      uris:
+        - http://localhost:9200
+      connection-timeout: 10s
+      read-timeout: 30s
+      username: elastic
+      password: 123456
   data:
     mongodb:
       # 数据库带权限验证 固定格式：mongodb://用户名:密码@host:port/database name?authSource=admin&authMechanism=SCRAM-SHA-1

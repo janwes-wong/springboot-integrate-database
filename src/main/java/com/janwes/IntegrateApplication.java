@@ -3,7 +3,8 @@ package com.janwes;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
  * @author Janwes
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @description
  */
 @SpringBootApplication
+@EnableElasticsearchRepositories({"com.janwes.repository.esrepository"}) // 开启elasticsearch包实例扫描
+@EnableMongoRepositories({"com.janwes.repository.mgrepository"}) // 开启MongoDB包实例扫描
 @MapperScan({"com.janwes.mapper"})
 public class IntegrateApplication {
 
