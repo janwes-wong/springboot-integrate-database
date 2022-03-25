@@ -35,9 +35,9 @@ public class ESTest {
     @Test
     public void save() {
         Item item = itemEsRepository.save(
-                new Item(3L, "蓝胖子",
-                        "澳洲",
-                        "致力于婴幼儿智力健康发展", 99.9, new Date(), new Date()));
+                new Item(5L, "畅优",
+                        "中国广东省广州市",
+                        "健康生活每一天", 10.9, new Date(), new Date()));
         System.out.println(item);
     }
 }
