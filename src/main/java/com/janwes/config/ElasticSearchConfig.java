@@ -21,7 +21,6 @@ import java.util.List;
  * @package com.janwes.config
  * @date 2022/3/25 16:37
  * @description elasticsearch配置类
- * 高级rest客户端配置
  */
 @Configuration
 public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
@@ -31,6 +30,12 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     @Autowired
     private ElasticsearchRestClientProperties properties;
 
+    /**
+     * elasticsearch高级rest客户端配置
+     * 其他类型客户端配置可参考该地址：https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#core.repository-populators
+     *
+     * @return
+     */
     @Override
     @Bean("restHighLevelClient")
     public RestHighLevelClient elasticsearchClient() {
