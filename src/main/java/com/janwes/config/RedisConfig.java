@@ -31,7 +31,7 @@ import java.util.Arrays;
  * @version 1.0
  * @package com.janwes.config
  * @date 2021/7/21 16:17
- * @description 自定义redis配置类
+ * @description 自定义redis配置类 Redis客户端：Jedis、Lettuce、Redisson(基于分布式)
  */
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
