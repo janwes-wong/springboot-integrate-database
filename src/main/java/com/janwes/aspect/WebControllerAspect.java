@@ -77,16 +77,15 @@ public class WebControllerAspect {
             // 获取方法参数注解
             Annotation[][] parameterAnnotations = methodSignature.getMethod().getParameterAnnotations();
 
-            for (int var15 = 0; var15 < parameterAnnotations.length; ++var15) {
-                Annotation[] parameterAnnotation = parameterAnnotations[var15];
+            for (Annotation[] parameterAnnotation : parameterAnnotations) {
                 int paramIndex = ArrayUtils.indexOf(parameterAnnotations, parameterAnnotation);
                 String parameterName = parameterNames[paramIndex];
                 Object parameterValue = args[paramIndex];
-                if (parameterValue instanceof String || parameterValue instanceof Boolean || parameterValue instanceof Integer) {
+                if (parameterValue instanceof String || parameterValue instanceof Boolean
+                        || parameterValue instanceof Integer || parameterValue instanceof Long) {
                     jsonObject.put(parameterName, parameterValue);
                 }
-                for (int var16 = 0; var16 < parameterAnnotation.length; ++var16) {
-                    Annotation annotation = parameterAnnotation[var16];
+                for (Annotation annotation : parameterAnnotation) {
                     // 如果注解为ResponseBody 请求体
                     if (annotation instanceof RequestBody) {
                         jsonObject.put(parameterName, JSON.toJSONString(parameterValue));
